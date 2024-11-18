@@ -1,31 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { TypeContext } from "../Context/TypeContext";
 
-export default function Searchbar({ setData, setType, type }) {
+export default function Searchbar() {
   const [query, setQuery] = useState("");
-  const token = import.meta.env.VITE_DISCOGS_USER_TOKEN;
+  const { setType, type } = useContext(TypeContext);
+  const navigate = useNavigate();
 
   const handleSearch = async (e) => {
     e.preventDefault();
 
-    const { data } = await axios.get(
-      "https://api.discogs.com/database/search",
-      {
-        headers: {
-          Authorization: `Discogs token=${token}`,
-        },
-        params: {
-          query,
-          type: type == "artist" ? "artist" : "release",
-          per_page: 1,
-        },
-      }
-    );
-
-    setData(data.results);
+    navigate(`/${type === "artist" ? "artists" : "albums"}/${query}`);
     setQuery("");
-    console.log(data.results);
   };
 
   return (
@@ -34,7 +22,7 @@ export default function Searchbar({ setData, setType, type }) {
         <select
           onChange={(e) => setType(e.target.value)}
           className="select select-secondary w-full max-w-xs"
-          defaultValue={"artist"}
+          value={type}
         >
           <option value="artist">Artist</option>
           <option value="album">Album</option>

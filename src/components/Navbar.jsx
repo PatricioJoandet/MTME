@@ -3,7 +3,7 @@ import "../App.css";
 import { Link } from "react-router-dom";
 import Searchbar from "./Searchbar";
 
-export default function Navbar({ setData, setType, type }) {
+export default function Navbar() {
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
@@ -12,7 +12,7 @@ export default function Navbar({ setData, setType, type }) {
         </Link>
       </div>
       <div className="flex-none gap-2">
-        <Searchbar setData={setData} setType={setType} type={type} />
+        <Searchbar />
       </div>
     </div>
   );

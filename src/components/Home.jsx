@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
-import Searchbar from "./Searchbar";
-import Items from "./Items";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { TypeContext } from "../Context/TypeContext";
 
-export default function Home({ setData, data, setType, type }) {
+export default function Home() {
   const token = import.meta.env.VITE_DISCOGS_USER_TOKEN;
 
   const [cover, setCover] = useState("");
   const [loading, setLoading] = useState(false);
+  const { setType } = useContext(TypeContext);
 
   useEffect(() => {
-    setData([]);
     getRandomImg();
   }, []);
 
@@ -26,7 +25,7 @@ export default function Home({ setData, data, setType, type }) {
         },
         params: {
           type: "release",
-          sort: "hot",
+          sort: "have",
           sort_order: "desc",
           per_page: 100,
         },
@@ -59,10 +58,18 @@ export default function Home({ setData, data, setType, type }) {
                 veritatis architecto quis quia?
               </p>
               <div className="flex justify-center gap-2">
-                <Link className="btn" to={"/artists/"}>
+                <Link
+                  className="btn"
+                  to={"/artists/"}
+                  onClick={() => setType("artist")}
+                >
                   Artistas
                 </Link>
-                <Link className="btn" to={"/albums/"}>
+                <Link
+                  className="btn"
+                  to={"/albums/"}
+                  onClick={() => setType("album")}
+                >
                   Álbumes
                 </Link>
               </div>
