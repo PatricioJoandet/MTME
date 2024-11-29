@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 export const TypeContext = createContext();
 
@@ -10,4 +10,8 @@ export const TypeProvider = ({ children }) => {
       {children}
     </TypeContext.Provider>
   );
+};
+
+export const useType = () => {
+  return useContext(TypeContext);
 };

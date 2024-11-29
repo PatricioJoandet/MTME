@@ -10,6 +10,9 @@ export default function Navbar() {
         <Link className="btn btn-ghost text-xl" to={"/"}>
           HOME
         </Link>
+        <Link className="btn btn-ghost text-xl" to={"/likes"}>
+          My likes
+        </Link>
       </div>
       <div className="flex-none gap-2">
         <Searchbar />

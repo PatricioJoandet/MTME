@@ -31,7 +31,6 @@ export default function Home() {
         },
       }
     );
-    console.log(data);
     setCover(data.results[id].cover_image);
     setLoading(false);
   };
