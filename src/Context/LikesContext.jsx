@@ -4,7 +4,7 @@ import { useType } from "./TypeContext";
 const LikesContext = createContext();
 
 export const LikesProvider = ({ children }) => {
-  const likesLocalStorage = JSON.parse(localStorage.getItem("likes"));
+  const likesLocalStorage = JSON.parse(localStorage.getItem("likes")) || [];
   const [likes, setLikes] = useState(likesLocalStorage);
   const { type } = useType();
 
