@@ -1,31 +1,27 @@
 import React, { useEffect } from "react";
 import { useLikes } from "../Context/LikesContext";
-import { Link } from "react-router-dom";
-import { useType } from "../Context/TypeContext";
-import ItemCard from "./ItemCard";
+import LikedElements from "./LikedElements.jsx";
 
 export default function Likes() {
-  const { likes } = useLikes();
+  const { likes, likedArtists, likedAlbums } = useLikes();
+
+  console.log(likedAlbums);
 
   return (
-    <div className="bg-red-400">
-      <h1 className="text-white text-2xl font-bold">My likes</h1>
+    <div className="mt-20">
+      <h1 className="text-white text-4xl font-bold ml-5">My likes</h1>
       {likes && likes.length > 0 ? (
-        <div className="flex">
-          {likes.map((l) => (
-            <Link
-              key={l.id}
-              to={`/details/${l.type === "artist" ? "artist" : "albums"}/${
-                l.id
-              }`}
-              state={{ item: l }}
-            >
-              <ItemCard data={l} />
-            </Link>
-          ))}
+        <div className="mx-10 mt-5">
+          {likedArtists.length > 0 && (
+            <LikedElements data={likedArtists} title={"Artists"} />
+          )}
+
+          {likedAlbums.length > 0 && (
+            <LikedElements data={likedAlbums} title={"Albums"} />
+          )}
         </div>
       ) : (
-        <></>
+        <> </>
       )}
     </div>
   );

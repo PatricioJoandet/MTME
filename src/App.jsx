@@ -8,6 +8,8 @@ import Items from "./Components/Items.jsx";
 import Home from "./Components/Home.jsx";
 import Likes from "./Components/Likes.jsx";
 import "./App.css";
+import Recommendations from "./Components/Recommendations.jsx";
+import NotFound from "./Components/NotFound.jsx";
 
 function App() {
   const [data, setData] = useState([]);
@@ -21,11 +23,12 @@ function App() {
             <Route path="/artists/:query?" element={<Items />} />
             <Route path="/albums/:query?" element={<Items />} />
             <Route path="/likes" element={<Likes setData={setData} />} />
-            <Route path="/recomendations" />
+            <Route path="/recommendations" element={<Recommendations />} />
             <Route
               path="/details/:type/:id"
               element={<ItemDetail setData={setData} data={data} />}
             />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </LikesProvider>
       </TypeProvider>
@@ -34,5 +37,3 @@ function App() {
 }
 
 export default App;
-
-// 29/11: hice un paginator y un boton volver. Como hago que aparezca un toast cuando se agrega a los likes?? ver

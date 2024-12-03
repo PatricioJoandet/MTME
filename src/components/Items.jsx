@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import ItemCard from "./ItemCard";
-import Pagination from "./Pagination";
-import { Link, useParams } from "react-router-dom";
+import Pagination from "./Pagination.jsx";
+import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
-import { TypeContext } from "../Context/TypeContext";
+import { TypeContext } from "../Context/TypeContext.jsx";
+import ItemCard from "./ItemCard.jsx";
 
 export default function Items() {
   const token = import.meta.env.VITE_DISCOGS_USER_TOKEN;
@@ -12,10 +12,15 @@ export default function Items() {
   const [page, setPage] = useState(1);
   const { query } = useParams();
   const { type } = useContext(TypeContext);
+  const location = useLocation();
 
   useEffect(() => {
     fetchData();
-  }, [query, page]);
+  }, [location, page]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [location]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -32,12 +37,12 @@ export default function Items() {
             type: type == "artist" ? "artist" : "release",
             per_page: 50,
             sort: "have",
-            //sort_order: "desc",
-            //...(type === "album" ? { format: "cd" } : {}),
+            ...(type === "album" && { format: "cd" }),
           },
         }
       );
       setData(data);
+
       setTimeout(() => {
         setLoading(false);
       }, 500);
@@ -47,14 +52,14 @@ export default function Items() {
   };
 
   return (
-    <div className="flex justify-center mt-8">
+    <div className="flex justify-center mt-20">
       {loading ? (
         <div className="skeleton h-48 w-48 flex justify-center">
           <span className="loading loading-spinner text-warning loading-lg"></span>
         </div>
       ) : (
         <div className="flex flex-col justify-center items-center">
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-wrap w-4/6 justify-center gap-4">
             {data.results.map((d) => (
               <Link key={d.id} to={`/details/${type}/${d.id}`}>
                 <ItemCard data={d} />

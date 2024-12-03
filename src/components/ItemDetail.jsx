@@ -2,11 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useLikes } from "../Context/LikesContext";
 import axios from "axios";
+import Toast from "./Toast";
+import Carousel from "./Carousel";
+import { useType } from "../Context/TypeContext";
+import Tracklist from "./Tracklist";
+import Stats from "./Stats";
+import Dropdown from "./Dropdown";
+import MoreInfo from "./MoreInfo";
 
 export default function ItemDetail({ data, setData }) {
   const { id, type } = useParams();
+  const { setType } = useType();
   const { likes, handleLike } = useLikes();
   const [loading, setLoading] = useState(true);
+  const [showToast, setShowToast] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
   const token = import.meta.env.VITE_DISCOGS_USER_TOKEN;
   const isLiked = likes.some((likedItem) => likedItem.id === data?.id);
   const location = useLocation();
@@ -17,6 +27,7 @@ export default function ItemDetail({ data, setData }) {
     if (!item) {
       const fetchData = async () => {
         setLoading(true);
+        setType(type);
 
         try {
           const url = `https://api.discogs.com/${
@@ -29,6 +40,7 @@ export default function ItemDetail({ data, setData }) {
             },
           });
           setData(response.data);
+          setSelectedImage(response.data.images[0]?.uri);
           setLoading(false);
         } catch (error) {
           console.log(error);
@@ -38,82 +50,90 @@ export default function ItemDetail({ data, setData }) {
       fetchData();
     } else {
       setData(item);
+      setSelectedImage(item.images[0]?.uri);
       setLoading(false);
     }
   }, [id, token]);
 
+  const handleClick = () => {
+    handleLike({ ...data });
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2000);
+  };
   return (
-    <div>
+    <div className="mt-20">
       {loading ? (
         <div>Loading</div>
       ) : (
-        <div className="container flex flex-row mx-auto justify-center">
+        <>
           <button
             onClick={() => navigate(-1)}
             className="bg-blue-500 text-white px-4 py-2 rounded mb-4 self-start"
           >
             Volver
           </button>
-          <div className="carousel carousel-vertical rounded-box h-96">
-            {data.images.map((image, index) => (
-              <div className="carousel-item h-full" key={index}>
-                <img
-                  src={image.uri}
-                  alt={`Slide ${index + 1}`}
-                  className=" object-cover w-[600px] mx-auto rounded-lg"
+          <div className="grid grid-cols-2">
+            {/*IMAGES*/}
+
+            <div className="flex flex-row">
+              <Carousel
+                setSelectedImage={setSelectedImage}
+                data={data}
+                selectedImage={selectedImage}
+              />
+              <img
+                src={selectedImage}
+                alt="Selected"
+                className="object-cover w-[600px] h-[600px] mx-auto"
+              />
+            </div>
+            <div className="grid grid-cols-3 grid-rows-[auto,auto,auto]  mx-auto my-4 ">
+              {/*TITLES*/}
+              <div className="col-span-3 ">
+                <h1 className="text-4xl font-bold text-wrap">
+                  {data.title || data.name}
+                </h1>
+                {type === "album" && (
+                  <>
+                    <h2 className="text-2xl">{data.artists[0].name}</h2>
+                    <p>{data.year}</p>
+                  </>
+                )}
+              </div>
+              {/*STATS*/}
+              <div className=" col-span-1 stats row-start-2 bg-transparent shadow h-32 p-2 my-5 hover:bg-base-100">
+                <Stats
+                  data={data.community}
+                  isLiked={isLiked}
+                  handleClick={handleClick}
+                  type={type}
                 />
               </div>
-            ))}
-          </div>
-          <div className="container mx-auto my-4">
-            <div className="flex gap-2">
-              <div>
-                <div>
-                  <h1 className="text-5xl font-bold">
-                    {data.title || data.name}
-                  </h1>
-                  {type === "album" && (
-                    <>
-                      <h2 className="text-2xl">{data.artists[0].name}</h2>
-                      <p>{data.year}</p>
-                    </>
-                  )}
-                  <button
-                    onClick={() => handleLike({ ...data })}
-                    className={`mt-4 px-4 py-2 text-white ${
-                      isLiked ? "bg-red-500" : "bg-gray-500"
-                    } rounded`}
-                  >
-                    {isLiked ? "Unlike" : "Like"}
-                  </button>
+              {/*TRACKLIST*/}
+              {type === "album" ? (
+                <div className="col-span-2 row-start-3 collapse-title text-xl font-medium">
+                  <Dropdown title={"Tracklist"}>
+                    <Tracklist data={data.tracklist} />
+                  </Dropdown>
                 </div>
-              </div>
+              ) : (
+                <div className="col-span-2 row-start-3 collapse-title text-xl font-medium">
+                  <Dropdown title={"More info"}>
+                    <MoreInfo
+                      profile={data.profile || "No info"}
+                      links={data?.urls}
+                    />
+                  </Dropdown>
+                </div>
+              )}
             </div>
+            <Toast
+              msg={isLiked ? `Added to likes!` : `Removed from likes!`}
+              show={showToast}
+            />
           </div>
-        </div>
+        </>
       )}
     </div>
   );
 }
-
-<div className="stats bg-transparent shadow h-32 my-5">
-  <div className="stat px-1">
-    <div className="stat-figure text-primary">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        className="inline-block h-8 w-8 stroke-current"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-        ></path>
-      </svg>
-    </div>
-    <div className="stat-title">Total Likes</div>
-    <div className="stat-value text-primary">25.6K</div>
-  </div>
-</div>;

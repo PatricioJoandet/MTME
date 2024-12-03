@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { TypeContext } from "../Context/TypeContext";
+import Loading from "./Loading";
 
 export default function Home() {
   const token = import.meta.env.VITE_DISCOGS_USER_TOKEN;
@@ -38,23 +39,21 @@ export default function Home() {
   return (
     <>
       {loading ? (
-        <div className="text-center text-white text-2xl">Cargando...</div>
+        <Loading />
       ) : (
         <div
           className="hero min-h-screen"
           style={{
             backgroundImage: `url(${cover})`,
+            position: "fixed",
           }}
         >
           <div className="hero-overlay bg-opacity-60"></div>
           <div className="hero-content text-neutral-content text-center">
             <div className="max-w-md">
-              <h1 className="text-white mb-5 text-5xl font-bold">Hola!</h1>
-              <p className="text-white mb-5">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. A
-                dignissimos atque voluptatibus nesciunt cumque, eos harum iste
-                modi quam. Rem iusto dolores quas impedit ratione tempore
-                veritatis architecto quis quia?
+              <h1 className="text-white mb-5 text-5xl font-bold">Hello!</h1>
+              <p className="text-white text-3xl mb-5 font-normal">
+                Get recommendations based on what you like
               </p>
               <div className="flex justify-center gap-2">
                 <Link

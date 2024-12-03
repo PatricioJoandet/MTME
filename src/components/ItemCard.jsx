@@ -1,18 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import Loading from "./Loading";
 
 export default function ItemCard({ data }) {
+  const [loading, setLoading] = useState(true);
+
+  const NO_IMAGE =
+    "https://st.discogs.com/77a54e691a41849b423c38a2c3520f837bd88696/images/spacer.gif";
+
+  const backupImage = "/no_record.png";
+
   return (
-    <div className="relative cursor-pointer">
-      <img
-        className="rounded-lg h-[250px]"
-        src={data.cover_image || data.images[0].uri}
-        alt={data.title || data.name}
-      />
-      <div className="absolute bottom-0 left-0 right-0 rounded-b-lg bg-gradient-to-t from-black via-black/70 to-transparent p-2">
-        <h2 className="text-white text-lg font-semibold text-center">
-          {data.title || data.name}
-        </h2>
+    <motion.div
+      className="card w-[200px] card-compact"
+      whileHover={{ scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 300 }}
+    >
+      <figure className="px-2 pt-5">
+        {loading && <Loading />}
+        <img
+          className="rounded-lg h-[150px]"
+          src={
+            data.cover_image || data.images[0].uri || data.thumb || backupImage
+          }
+          alt={data.title || data.name}
+          onLoad={() => setLoading(false)}
+        />
+      </figure>
+      <div className="card-body">
+        <p className="text-sm truncate">{data.title || data.name}</p>
       </div>
-    </div>
+    </motion.div>
   );
 }

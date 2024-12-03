@@ -6,6 +6,8 @@ const LikesContext = createContext();
 export const LikesProvider = ({ children }) => {
   const likesLocalStorage = JSON.parse(localStorage.getItem("likes")) || [];
   const [likes, setLikes] = useState(likesLocalStorage);
+  const likedArtists = likes.filter((l) => l.type === "artist");
+  const likedAlbums = likes.filter((l) => l.type === "album");
   const { type } = useType();
 
   useEffect(() => {
@@ -19,17 +21,21 @@ export const LikesProvider = ({ children }) => {
   }, [likes]);
 
   const handleLike = (item) => {
-    const itemWithType = { ...item, type };
+    item.type = type;
+    item.fullTitle = item.artists[0].name + " - " + item.title;
+    console.log(item);
 
     setLikes((prevLikes) =>
       prevLikes.some((likedItem) => likedItem.id === item.id)
         ? prevLikes.filter((likedItem) => likedItem.id !== item.id)
-        : [...prevLikes, itemWithType]
+        : [...prevLikes, item]
     );
   };
 
   return (
-    <LikesContext.Provider value={{ likes, handleLike }}>
+    <LikesContext.Provider
+      value={{ likes, handleLike, likedAlbums, likedArtists }}
+    >
       {children}
     </LikesContext.Provider>
   );
