@@ -4,6 +4,7 @@ import axios from "axios";
 import ItemCard from "./ItemCard";
 import { Link } from "react-router-dom";
 import Loading from "./Loading";
+import NoLikes from "./NoLikes";
 
 export default function Recommendations() {
   const { likedAlbums } = useLikes();
@@ -42,7 +43,7 @@ export default function Recommendations() {
                 genre: randomGenre,
                 style: randomStyle,
                 sort: "want",
-                format: "cd",
+                format: "vinyl",
               },
             }
           );
@@ -72,18 +73,22 @@ export default function Recommendations() {
   }, [selected]);
 
   return likedAlbums.length > 0 ? (
-    <div className="mt-20">
-      <h1>Select album to get recommendations </h1>
-      <div className="flex overflow-x-scroll overflow-y-hidden scrollbar-thin mx-5">
-        {likedAlbums.map((a) => (
-          <div key={a.id} onClick={() => setSelected(a)}>
-            <ItemCard data={a} />
-          </div>
-        ))}
+    <div className="mt-20 mx-10">
+      <h1 className="text-white text-4xl font-bold ml-5">Recommendations</h1>
+      <div className="mx-10">
+        <h1 className="font-bold">Select album to get recommendations </h1>
+        <div className="flex overflow-x-scroll overflow-y-hidden scrollbar-thin">
+          {likedAlbums.map((a) => (
+            <div key={a.id} onClick={() => setSelected(a)}>
+              <ItemCard data={a} />
+            </div>
+          ))}
+        </div>
       </div>
       {selected && (
-        <div>
-          <h1>Recommendations based on {selected.title}:</h1>
+        <div className="mx-10">
+          <h1 className="font-normal">Recommendations based on</h1>
+          <span className="font-bold">{selected.title}</span>
           {loading ? (
             <Loading />
           ) : (
@@ -99,6 +104,6 @@ export default function Recommendations() {
       )}
     </div>
   ) : (
-    <div className="mt-20">no hay nada</div>
+    <NoLikes />
   );
 }

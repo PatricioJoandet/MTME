@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function Pagination({ page, setPage, totalPages }) {
-  console.log(page);
   return (
     <div className="join">
       <button

@@ -18,7 +18,7 @@ export default function Navbar() {
   return (
     <div
       className={`navbar fixed top-0 w-full z-10 transition-all duration-300 ${
-        scrolling ? "bg-gray-800" : "bg-transparent"
+        scrolling ? "bg-[#F72798]" : "bg-transparent"
       }`}
     >
       <div className="flex-1 ">

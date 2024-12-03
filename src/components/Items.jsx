@@ -37,7 +37,7 @@ export default function Items() {
             type: type == "artist" ? "artist" : "release",
             per_page: 50,
             sort: "have",
-            ...(type === "album" && { format: "cd" }),
+            ...(type === "album" && { format: "vinyl" }),
           },
         }
       );

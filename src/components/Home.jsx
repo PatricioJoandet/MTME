@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { TypeContext } from "../Context/TypeContext";
 import Loading from "./Loading";
+import MainButtons from "./MainButtons";
 
 export default function Home() {
   const token = import.meta.env.VITE_DISCOGS_USER_TOKEN;
@@ -39,7 +40,9 @@ export default function Home() {
   return (
     <>
       {loading ? (
-        <Loading />
+        <div className="flex items-center justify-center h-screen">
+          <Loading />
+        </div>
       ) : (
         <div
           className="hero min-h-screen"
@@ -55,22 +58,7 @@ export default function Home() {
               <p className="text-white text-3xl mb-5 font-normal">
                 Get recommendations based on what you like
               </p>
-              <div className="flex justify-center gap-2">
-                <Link
-                  className="btn"
-                  to={"/artists/"}
-                  onClick={() => setType("artist")}
-                >
-                  Artistas
-                </Link>
-                <Link
-                  className="btn"
-                  to={"/albums/"}
-                  onClick={() => setType("album")}
-                >
-                  Álbumes
-                </Link>
-              </div>
+              <MainButtons />
             </div>
           </div>
         </div>

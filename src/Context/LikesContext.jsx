@@ -22,8 +22,10 @@ export const LikesProvider = ({ children }) => {
 
   const handleLike = (item) => {
     item.type = type;
-    item.fullTitle = item.artists[0].name + " - " + item.title;
-    console.log(item);
+
+    if (type === "album") {
+      item.fullTitle = item.artists[0].name + " - " + item.title;
+    }
 
     setLikes((prevLikes) =>
       prevLikes.some((likedItem) => likedItem.id === item.id)

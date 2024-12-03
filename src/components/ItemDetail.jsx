@@ -9,6 +9,8 @@ import Tracklist from "./Tracklist";
 import Stats from "./Stats";
 import Dropdown from "./Dropdown";
 import MoreInfo from "./MoreInfo";
+import Loading from "./Loading";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 export default function ItemDetail({ data, setData }) {
   const { id, type } = useParams();
@@ -39,8 +41,14 @@ export default function ItemDetail({ data, setData }) {
               Authorization: `Discogs token=${token}`,
             },
           });
+          if (!response.data.images || response.data.images.length === 0) {
+            response.data.backup_image = "/no_record.png";
+            console.log(data.backup_image);
+          }
           setData(response.data);
-          setSelectedImage(response.data.images[0]?.uri);
+          setSelectedImage(
+            response.data.images?.[0]?.uri || response.data.backup_image
+          );
           setLoading(false);
         } catch (error) {
           console.log(error);
@@ -50,7 +58,7 @@ export default function ItemDetail({ data, setData }) {
       fetchData();
     } else {
       setData(item);
-      setSelectedImage(item.images[0]?.uri);
+      setSelectedImage(item.images[0]?.uri) || data.backup_image;
       setLoading(false);
     }
   }, [id, token]);
@@ -60,18 +68,21 @@ export default function ItemDetail({ data, setData }) {
     setShowToast(true);
     setTimeout(() => setShowToast(false), 2000);
   };
+
   return (
     <div className="mt-20">
       {loading ? (
-        <div>Loading</div>
+        <Loading />
       ) : (
-        <>
-          <button
-            onClick={() => navigate(-1)}
-            className="bg-blue-500 text-white px-4 py-2 rounded mb-4 self-start"
-          >
-            Volver
-          </button>
+        <div>
+          <div className="mx-4">
+            <button
+              onClick={() => navigate(-1)}
+              className="after:contents bg-gradient-to-r from-transparent to-[#F72798] text-white px-4 py-2 rounded mb-4  hover:bg-gradient-to-l hover:from-transparent hover:to-[#F72798] transition-all duration-300"
+            >
+              <IoMdArrowRoundBack size={30} />
+            </button>
+          </div>
           <div className="grid grid-cols-2">
             {/*IMAGES*/}
 
@@ -132,7 +143,7 @@ export default function ItemDetail({ data, setData }) {
               show={showToast}
             />
           </div>
-        </>
+        </div>
       )}
     </div>
   );

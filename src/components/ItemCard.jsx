@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Loading from "./Loading";
 
 export default function ItemCard({ data }) {
   const [loading, setLoading] = useState(true);
 
-  const NO_IMAGE =
-    "https://st.discogs.com/77a54e691a41849b423c38a2c3520f837bd88696/images/spacer.gif";
-
+  const NO_IMAGE = "/spacer.gif";
   const backupImage = "/no_record.png";
+
+  useEffect(() => {
+    console.log(data);
+
+    if (data.cover_image?.includes(NO_IMAGE)) {
+      data.cover_image = backupImage;
+    }
+  }, []);
 
   return (
     <motion.div
