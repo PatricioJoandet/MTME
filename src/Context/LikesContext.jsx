@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useType } from "./TypeContext";
+import { useLocation } from "react-router-dom";
 
 const LikesContext = createContext();
 
@@ -21,7 +22,8 @@ export const LikesProvider = ({ children }) => {
   }, [likes]);
 
   const handleLike = (item) => {
-    item.type = type;
+    const path = window.location.href.split("/");
+    item.type = path[4];
 
     if (type === "album") {
       item.fullTitle = item.artists[0].name + " - " + item.title;

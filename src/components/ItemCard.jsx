@@ -9,8 +9,6 @@ export default function ItemCard({ data }) {
   const backupImage = "/no_record.png";
 
   useEffect(() => {
-    console.log(data);
-
     if (data.cover_image?.includes(NO_IMAGE)) {
       data.cover_image = backupImage;
     }

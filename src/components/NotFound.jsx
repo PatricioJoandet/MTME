@@ -7,7 +7,11 @@ export default function NotFound() {
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="flex items-center">
         <span className="text-[300px]">4</span>
-        <img className="h-[250px] translate-y-6" src={img} alt="Error Icon" />
+        <img
+          className="h-[250px] translate-y-6 animate-spinCustom"
+          src={img}
+          alt="Error Icon"
+        />
         <span className="text-[300px]">4</span>
       </div>
       <h2 className="text-xl mt-4">

@@ -36,6 +36,7 @@ export default function Searchbar() {
             onChange={(e) => setQuery(e.target.value)}
             placeholder={`Search for an ${type}`}
             className="bg-transparent flex-grow focus:outline-none text-gray-700 placeholder-gray-500"
+            name="q"
           />
 
           <button

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Searchbar from "./Searchbar";
+import Logo from "./Logo";
 
 export default function Navbar() {
   const [scrolling, setScrolling] = useState(false);
@@ -17,20 +18,24 @@ export default function Navbar() {
 
   return (
     <div
-      className={`navbar fixed top-0 w-full z-10 transition-all duration-300 ${
+      className={`navbar fixed h-[15px] top-0 w-full z-10 transition-all duration-300 ${
         scrolling ? "bg-[#F72798]" : "bg-transparent"
       }`}
     >
-      <div className="flex-1 ">
-        <Link className="btn btn-ghost text-xl" to={"/"}>
-          HOME
-        </Link>
-        <Link className="btn btn-ghost text-xl" to={"/likes"}>
+      <div className="flex-1 gap-2">
+        <Logo />
+        <NavLink
+          className="btn btn-ghost text-xl hover:bg-[#F72798]"
+          to={"/likes"}
+        >
           My likes
-        </Link>
-        <Link className="btn btn-ghost text-xl" to={"/recommendations"}>
+        </NavLink>
+        <NavLink
+          className="btn btn-ghost text-xl hover:bg-[#F72798]"
+          to={"/recommendations"}
+        >
           Recommendations
-        </Link>
+        </NavLink>
       </div>
       <div className="flex-none gap-2">
         <Searchbar />

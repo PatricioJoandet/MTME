@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import { TypeContext } from "../Context/TypeContext";
 import Loading from "./Loading";
@@ -24,6 +23,7 @@ export default function Home() {
       {
         headers: {
           Authorization: `Discogs token=${token}`,
+          "Content-Type": "application/json",
         },
         params: {
           type: "release",
@@ -66,4 +66,3 @@ export default function Home() {
     </>
   );
 }
-//<Items data={data} type={type} />

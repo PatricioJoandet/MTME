@@ -16,7 +16,7 @@ export default function Items() {
 
   useEffect(() => {
     fetchData();
-  }, [location, page]);
+  }, [location, page, type]);
 
   useEffect(() => {
     setPage(1);
@@ -30,6 +30,7 @@ export default function Items() {
         {
           headers: {
             Authorization: `Discogs token=${token}`,
+            "Content-Type": "application/json",
           },
           params: {
             ...(query && { query: `"${query}"` }),

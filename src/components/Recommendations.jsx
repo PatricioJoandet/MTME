@@ -27,15 +27,13 @@ export default function Recommendations() {
             Math.floor(Math.random() * selected.styles.length)
           ] || "";
 
-        console.log(randomGenre);
-        console.log(randomStyle);
-
         try {
           const { data } = await axios.get(
             "https://api.discogs.com/database/search",
             {
               headers: {
                 Authorization: `Discogs token=${token}`,
+                "Content-Type": "application/json",
               },
               params: {
                 type: "release",
@@ -56,10 +54,6 @@ export default function Recommendations() {
           const uniqueResults = [
             ...new Map(filteredResults.map((r) => [r.title, r])).values(),
           ];
-
-          console.log(filteredResults);
-          console.log(uniqueResults);
-
           setRecommendations(uniqueResults);
           setTimeout(() => {
             setLoading(false);

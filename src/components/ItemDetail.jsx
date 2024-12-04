@@ -39,11 +39,11 @@ export default function ItemDetail({ data, setData }) {
           const response = await axios.get(url, {
             headers: {
               Authorization: `Discogs token=${token}`,
+              "Content-Type": "application/json",
             },
           });
           if (!response.data.images || response.data.images.length === 0) {
             response.data.backup_image = "/no_record.png";
-            console.log(data.backup_image);
           }
           setData(response.data);
           setSelectedImage(
