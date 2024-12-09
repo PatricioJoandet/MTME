@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Pagination({ page, setPage, totalPages }) {
   return (
-    <div className="join">
+    <div className="join my-5">
       <button
         className="join-item btn"
         disabled={page == 1}

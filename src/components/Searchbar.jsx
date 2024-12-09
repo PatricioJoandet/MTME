@@ -11,7 +11,8 @@ export default function Searchbar() {
   const handleSearch = async (e) => {
     e.preventDefault();
 
-    navigate(`/${type === "artist" ? "artists" : "albums"}/${query}`);
+    navigate(`/${type}s/${query}`);
+    //navigate(`/${type === "artist" ? "artists" : "albums"}/${query}`);
     setQuery("");
   };
 

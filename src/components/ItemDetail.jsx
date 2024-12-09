@@ -31,9 +31,13 @@ export default function ItemDetail({ data, setData }) {
         setLoading(true);
         setType(type);
 
+        if ((type !== "artist" && type !== "album") || isNaN(Number(id))) {
+          navigate("/");
+        }
+
         try {
-          const url = `https://api.discogs.com/${
-            type == "artist" ? "artists" : "releases"
+          const url = `/api/${
+            type === "artist" ? "artists" : "releases"
           }/${id}`;
 
           const response = await axios.get(url, {
@@ -42,16 +46,21 @@ export default function ItemDetail({ data, setData }) {
               "Content-Type": "application/json",
             },
           });
+
           if (!response.data.images || response.data.images.length === 0) {
             response.data.backup_image = "/no_record.png";
           }
+
+          document.title = response.data.title ?? response.data.name;
           setData(response.data);
           setSelectedImage(
             response.data.images?.[0]?.uri || response.data.backup_image
           );
           setLoading(false);
         } catch (error) {
-          console.log(error);
+          if (error.response.status === 404 || error.response.status === 500) {
+            navigate("/not-found");
+          }
         }
       };
 
@@ -59,6 +68,7 @@ export default function ItemDetail({ data, setData }) {
     } else {
       setData(item);
       setSelectedImage(item.images[0]?.uri) || data.backup_image;
+      document.title = item.title ?? item.name;
       setLoading(false);
     }
   }, [id, token]);
@@ -68,9 +78,10 @@ export default function ItemDetail({ data, setData }) {
     setShowToast(true);
     setTimeout(() => setShowToast(false), 2000);
   };
+  console.log(data);
 
   return (
-    <div className="mt-20">
+    <div className="mt-28">
       {loading ? (
         <Loading />
       ) : (

@@ -1,9 +1,7 @@
 import React from "react";
-import { useType } from "../Context/TypeContext";
 import MainButtons from "./MainButtons";
 
 export default function NoLikes() {
-  const { setType } = useType();
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="flex items-center">

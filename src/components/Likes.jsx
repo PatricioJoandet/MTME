@@ -5,10 +5,11 @@ import NoLikes from "./NoLikes.jsx";
 
 export default function Likes() {
   const { likes, likedArtists, likedAlbums } = useLikes();
+  document.title = "Likes";
   return (
     <div className="mx-10">
       {likes && likes.length > 0 ? (
-        <div className="mt-20">
+        <div className="mt-32">
           <h1 className="text-white text-4xl font-bold ml-5">My likes</h1>
           <div className="mx-10 mt-5">
             {likedArtists.length > 0 && (

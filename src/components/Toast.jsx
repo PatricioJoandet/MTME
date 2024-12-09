@@ -11,7 +11,7 @@ export default function Toast({ msg, show }) {
       exit={{ opacity: 0, x: 100 }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
     >
-      <div className="alert alert-info">
+      <div className="alert alert-info bg-[#F72798]">
         <FaInfoCircle />
         <span>{msg}</span>
       </div>

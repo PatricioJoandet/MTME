@@ -9,8 +9,8 @@ export default function MoreInfo({ profile, links }) {
       </div>
       <table className="table table-fixed">
         <tbody>
-          {links?.map((l, index) => (
-            <tr key={index} className="hover">
+          {links?.map((l, i) => (
+            <tr key={i} className="hover">
               <td>
                 <Link to={l}>{l}</Link>
               </td>

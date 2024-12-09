@@ -13,6 +13,8 @@ export default function Recommendations() {
   const [selected, setSelected] = useState();
   const [recommendations, setRecommendations] = useState([]);
 
+  document.title = "Recommendations";
+
   useEffect(() => {
     if (selected) {
       const fetchData = async () => {
@@ -67,7 +69,7 @@ export default function Recommendations() {
   }, [selected]);
 
   return likedAlbums.length > 0 ? (
-    <div className="mt-20 mx-10">
+    <div className="mt-32 mx-10">
       <h1 className="text-white text-4xl font-bold ml-5">Recommendations</h1>
       <div className="mx-10">
         <h1 className="font-bold">Select album to get recommendations </h1>
@@ -81,8 +83,13 @@ export default function Recommendations() {
       </div>
       {selected && (
         <div className="mx-10">
-          <h1 className="font-normal">Recommendations based on</h1>
-          <span className="font-bold">{selected.title}</span>
+          <h1 className="font-normal">
+            Recommendations based on{" "}
+            <span className="font-bold">
+              {selected.artists_sort}'s {selected.title}
+            </span>
+          </h1>
+
           {loading ? (
             <Loading />
           ) : (

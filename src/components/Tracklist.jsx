@@ -16,7 +16,7 @@ export default function Tracklist({ data }) {
             <tr key={index} className="hover">
               <td className="truncate w-3/6">{t.position}</td>
               <td className="truncate w-3/6">{t.title}</td>
-              <td className="w-2/6">{t.duration}</td>
+              <td className="w-2/6">{t.duration || "--"}</td>
             </tr>
           ))}
         </tbody>

@@ -3,8 +3,11 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        passion: ["Passion One", "serif"],
+      },
       animation: {
-        spinCustom: "spinCustom 3s linear infinite",
+        spinCustom: "spinCustom 5s linear infinite",
       },
       keyframes: {
         spinCustom: {

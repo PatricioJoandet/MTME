@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { FaRegHeart } from "react-icons/fa";
 
 export default function Stats({ data, isLiked, handleClick, type }) {
+  const [randomLikes] = useState(
+    () => Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000
+  );
+
+  const likes =
+    type === "artist"
+      ? randomLikes + (isLiked ? 1 : 0)
+      : data.have + (isLiked ? 1 : 0);
+
   return (
-    <div className="stat px-1">
+    <div className="stat  px-1">
       <div
         className="stat-figure text-primary cursor-pointer"
         onClick={handleClick}
@@ -15,10 +24,8 @@ export default function Stats({ data, isLiked, handleClick, type }) {
           <FaRegHeart size={30} />
         )}
       </div>
-      <div className="stat-value text-[#EBF400]">
-        {type === "album" ? (isLiked ? data.have + 1 : data.have) : 10}
-      </div>
-      <div className="stat-title">Total Likes</div>
+      <div className="stat-value text-[#EBF400] ">{likes}</div>
+      <div className="stat-title text-white">Total Likes</div>
     </div>
   );
 }

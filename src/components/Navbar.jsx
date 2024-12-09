@@ -18,8 +18,8 @@ export default function Navbar() {
 
   return (
     <div
-      className={`navbar fixed h-[15px] top-0 w-full z-10 transition-all duration-300 ${
-        scrolling ? "bg-[#F72798]" : "bg-transparent"
+      className={`navbar fixed h-[15px] top-0 w-full z-10  transition-all duration-300 ${
+        scrolling ? "bg-[#f7279985]" : "bg-transparent"
       }`}
     >
       <div className="flex-1 gap-2">

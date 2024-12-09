@@ -9,7 +9,8 @@ export default function Home() {
 
   const [cover, setCover] = useState("");
   const [loading, setLoading] = useState(false);
-  const { setType } = useContext(TypeContext);
+
+  document.title = "M.T.M.E.";
 
   useEffect(() => {
     getRandomImg();
@@ -18,21 +19,18 @@ export default function Home() {
   const getRandomImg = async () => {
     setLoading(true);
     const id = Math.floor(Math.random() * 100);
-    const { data } = await axios.get(
-      `https://api.discogs.com/database/search`,
-      {
-        headers: {
-          Authorization: `Discogs token=${token}`,
-          "Content-Type": "application/json",
-        },
-        params: {
-          type: "release",
-          sort: "have",
-          sort_order: "desc",
-          per_page: 100,
-        },
-      }
-    );
+    const { data } = await axios.get(`/api/database/search`, {
+      headers: {
+        Authorization: `Discogs token=${token}`,
+        "Content-Type": "application/json",
+      },
+      params: {
+        type: "release",
+        sort: "have",
+        sort_order: "desc",
+        per_page: 100,
+      },
+    });
     setCover(data.results[id].cover_image);
     setLoading(false);
   };

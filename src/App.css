@@ -2,3 +2,21 @@ body {
   background-color: black;
   color: white;
 }
+
+.passion-one-regular {
+  font-family: "Passion One", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.passion-one-bold {
+  font-family: "Passion One", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.passion-one-black {
+  font-family: "Passion One", serif;
+  font-weight: 900;
+  font-style: normal;
+}
