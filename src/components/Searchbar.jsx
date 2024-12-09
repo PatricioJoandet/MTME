@@ -12,7 +12,6 @@ export default function Searchbar() {
     e.preventDefault();
 
     navigate(`/${type}s/${query}`);
-    //navigate(`/${type === "artist" ? "artists" : "albums"}/${query}`);
     setQuery("");
   };
 

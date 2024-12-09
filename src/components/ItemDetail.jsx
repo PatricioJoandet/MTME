@@ -78,7 +78,6 @@ export default function ItemDetail({ data, setData }) {
     setShowToast(true);
     setTimeout(() => setShowToast(false), 2000);
   };
-  console.log(data);
 
   return (
     <div className="mt-28">

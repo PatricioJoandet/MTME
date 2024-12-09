@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Pagination from "./Pagination.jsx";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import { TypeContext } from "../Context/TypeContext.jsx";
 import ItemCard from "./ItemCard.jsx";

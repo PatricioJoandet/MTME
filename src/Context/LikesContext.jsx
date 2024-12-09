@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useType } from "./TypeContext";
-import { useLocation } from "react-router-dom";
 
 const LikesContext = createContext();
 

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { TypeContext } from "../Context/TypeContext";
 import Loading from "./Loading";
 import MainButtons from "./MainButtons";
 
@@ -10,7 +9,7 @@ export default function Home() {
   const [cover, setCover] = useState("");
   const [loading, setLoading] = useState(false);
 
-  document.title = "M.T.M.E.";
+  document.title = "mtme";
 
   useEffect(() => {
     getRandomImg();

@@ -7,7 +7,7 @@ export default function Logo() {
       <div className="relative w-24 h-24">
         <img className="w-full h-full" src="/no_record.png" alt="Record" />
         <span className="absolute inset-2  flex items-center justify-center text-2xl text-white font-passion font-bold tracking-wider">
-          title
+          mtme
         </span>
       </div>
     </Link>
